@@ -1,0 +1,227 @@
+compliation workflow
+-------
+
+42.c
+
+ -> Pre-processor(cpp)
+include expansion, define substitution
+
+ -> complier(cc1)
+create Assembly
+
+ -> Assembler
+create object code
+pushq, movq, movl...
+
+ -> Lingker(Id)
+link, produce exe
+0101010101010111101010000....
+
+ -> 42
+
+Basic execution model
+------
+
+##Binary
+
+###Code
+
+###Data
+
+###Stack
+
+###Heap
+
+####Processor(x86)
+
+- read & write stack and heap.
+
+- Fetch, decode, execute code and data.
+
+#####EIP
+
+-address of next instruction
+
+#####EFLAGS
+
+-condition codes
+
+#####EAX, EDX, ECX, EBX, ESP, ESP, EBP, ESI, EDI
+
+-E(A, D, C, B)X are 32bit register.
+ have modes such that
+(A, D, C, B)H, (A, D, C, B)L [mid & lower bits] 
+or 
+(A, D, C, B)X [lower 16 bits].
+
+-ESP, EBP, ESI, EDI
+ have modes such that
+SP, BP, SI, DI [lower 16bits].
+
+##Basic Ops and AT&T vs Intel Syntax
+
+-AT&T : source first, using %
+
+-Intel : destination first
+
+Memory Operations
+------------
+
+## x86 Addressing bytes
+
+edx = 00 00 00 cc
+
+eax = 00 00 00 03
+
+6 : 0xff
+5 : 0xee
+4 : 0xdd
+3 : 0xcc
+2 : 0xbb
+1 : 0xaa
+0 : 0x00
+
+###mov edx, [eax]
+
+edx = 0xffeeddcc
+
+###mov [eax], ebx
+
+6 : 0x00
+5 : 0x00
+4 : 0x00
+3 : 0x05
+2 : 0xbb
+1 : 0xaa
+0 : 0x00
+
+##Addressing Modes
+
+###Motivation : Addressing Buffers
+
+Type buf[s];
+buf[index] = *(<buf addr> + sizeof(Type)*index)
+
+###Referencing memory
+
+-loading a value : mov
+
+-loading an address : lea
+
+Control Flow
+-------------
+
+##Concepts
+
+C Abstraction (if- then-else)
+
+->
+
+####Assembly
+
+#####Jump
+ - direct : jmp addr
+ - indirect: jmp reg
+
+#####Branch
+ - Test EFLAG
+ - if(EFLAG SET) goto line
+
+C
+
+1. if(x <= y)
+2. z = x;
+3. else
+4. z = y;
+
+
+Psuedo Assembly
+
+1. Computing x - y. Set eflags :
+ 1. CF = 1 if x<y
+ 2. ZF = 1 if x==y
+
+2. Test EFLAGS. IF both CF and ZF not set, branch to E
+
+3. mov x,z
+   Jump to F
+   mov y,z
+
+##Setting EFLAGS
+
+-CF, ZF, PF, OF, SF.
+
+###Instructions
+
+####JO
+Jump if overflow
+
+####JNO
+Jump if not overflow
+
+####JS
+Jump if signed
+
+####JZ
+Jump if Zero
+
+####JE
+Jump if equal
+
+####JL
+Jump if less than
+
+####JLE
+Jump if lessequal
+
+####JB
+Jump if below
+
+####JP
+Jump if parity
+
+#Memory Organization
+
+##Stack
+
+-grows down
+-local variables
+-Lifetime : stack frame
+
+##Heap
+
+-grows up
+-Dinamically allocated
+-Lifetime : until free
+
+##cdecl - default for Linux & gcc
+
+-parameter area (인자)
+
+-return addr(EIP)
+
+-caller's ebp
+		<- %ebp
+-callee-save
+
+-locals
+		<- %esp
+
+##Call function
+
+push 인자
+push eip
+jmp main
+
+push ebp
+mov ebp esp
+
+##leave function
+
+mov esp, ebp
+pop ebp
+
+##return function
+
+pop eip
+mov eax, 리턴값
