@@ -188,3 +188,66 @@ the computation when storaging, but increase so when accessing the data.
  but lower flexibility due to parent/child relation.
 
  also, more work when insert, change, delete.
+
+
+###Insert
+
+Generally more loading.
+
+Testing : INSERT INTO... SELECT... WHERE ROWNUM <=100
+
+In fact, general index have similaar problem, since they have several index.
+
+Thereefore, in real situation, loading by this is not too big.
+
+###Update
+
+Since updating cluster key is similar to migration or chain, loading is not considerable.
+
+But it worsen clustering factor. therefore, it would be better not to designate frequently updating column as cluster key column.
+
+###Delete
+
+Since tables in cluster working as Row in table, DROP the table woking as 'delete' the rows, which cause considerable loading.
+
+Therefore, make new cluster and rename it is effective, or just DROP or TRUNCATE cluster don't cause too much loading.
+
+-DROP : delete all row, index.
+
+-TRUNCATE : delete only row, but faster than 'delete'
+
+##Hash clustering
+
+###Characteristic
+
+-using hash function to find where target data stored.
+
+-SIZE, HASHKEYS, HASH IS cannot change.
+
+-Access allowed by only '='
+
+-Over threshold, goto overflow
+
+-not evenly distributed column -> hash key collision
+
+-Not accesing table via index, Using hash function to do so -> faster
+
+-The others similar to index cluster.
+
+###Application range
+
+-Not good for huge data increasing
+
+-Or various access type
+
+-generally no recommended
+
+###Definiton
+
+A) Cluster name and Cluster column define
+
+B) Hash keys : the nymber of hash keys
+
+C) Hash is : Hash function
+
+D) Size : The number of rows can be stored in unit cluster.
