@@ -1,0 +1,17 @@
+Programming
+
+Hello.c -> (compile) -> Hello.s -> (assemble) -> Hello.obj -> (link) -> Hello.exe
+
+Compile
+
+from high lang to low lang(C -> assembly)
+
+Assemble
+
+from assembly code to machine lang
+(obj file : relocatable, debugger executable, ELF(Executable and Linkable File))
+
+Link
+
+from obj to user executable file (Also ELF)
+
