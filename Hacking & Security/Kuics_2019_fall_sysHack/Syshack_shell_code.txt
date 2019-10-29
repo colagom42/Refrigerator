@@ -1,0 +1,62 @@
+-structure of memory :
+
+shellcode ::: SFP : RET :
+		     overwrite Ret address with address of shellcode
+
+we need...
+
+
+1. where the shell code is (w/r s.t. bss, dynamic)
+
+2.RET offset
+
+보안 기법
+
+DEP : Data Execution Preventing
+
+NX W/X memory
+:
+Overview : Every memory phase has it's own Authorization
+Such as R : read W : write X : execution
+W/X memory means
+X prohibited where W allowed and vice versa
+
+then how we use shell code?
+
+A : 1. use RTL (chaining) to run a shell(system function)
+    2. Give Authorization to W,R only memory (use nprotect(linux), or virtual protect(Windows))
+
+Then how they prevent it?
+
+ASLR(Address space layout randomization)
+: randomized address (debugging invalid)
+
+How to attack?
+
+1. Brute force
+2.
+::Stack::Library:		:Data::Code::
+memory as process		ELF itself(ASLR not work here)
+find suitable seg in data/code section and write shellcode init
+We can find any ftn's address if we know address of only one of it by use offset of it.
+We say it 'leak'.
+3. use .dll, 
+
+How to prevent?
+
+PIE : randomize Code, Data section just like ASLR
+
+We are still working on it, to know how to break it
+
+Canary
+
+How it works
+
+if altered data write on ret add, canary dead(system stop)
+
+How to break
+1.leak Canary itself
+2.use faster ftn s.t. faster than return
+3.Canary don't dead when proper value is written. then send byte by byte until it do not dead.
+
+Checksec : ftn 

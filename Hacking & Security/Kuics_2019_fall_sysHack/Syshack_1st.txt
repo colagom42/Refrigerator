@@ -15,3 +15,14 @@ Link
 
 from obj to user executable file (Also ELF)
 
+
+
+section : combination of things which do similar when compiled
+
+segment : || (do similar thing when execute file)
+
+
+Shared library
+
+-file
+
