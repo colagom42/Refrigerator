@@ -1,0 +1,35 @@
+fully connected layer은 dense layer를 통해 행렬의 곱, XW + b로 예측값을 구한다.
+
+따라서W행렬의 행/렬의 값이 제한된다. 입력값과 출력값이 모두 완전히 연결되어있다. flatten 한 것 역시 마찬가지이다.
+
+CNN(Convolution Neural Network)
+
+Filter를 통해 2차원 이미지의 부분을 본다. 이미지를 4칸 단위로 연산하여 관계성을 반영한다. 이때 이 필터를 최적화하는 것이 트레이닝의 목적이다. 필터는 여러개일 수 있다. (4 4 1) 매트릭스를 (2 2) 필터 3개로 적용하면 (3 3 3) 출력값을 얻을 수 있다.
+
+Image classification에 사용된다.
+
+pooling은 단순한 압축인데, maxpooling은 대충 범위 내 최고값으로 퉁친다.
+
+RNN (Recurrent neural network)
+
+ 데이터에 순차성이 있을 때, 이를 어떻게 반영할 수 있을까?(ex 영상 등)
+ RNN은 데이터를 순차적으로 집어넣어가며 모델을 발전시키는 모델이다. 대신, 각 데이터가 들어갈 때 가해지는 연산은 모두 동일하다. 동일하다는 것이 중요하다.
+
+ 이놈은 어떻게 정의될까?
+
+ Vanilla RNN은
+
+ tanh(Wx(t) +  Uh(t-1)+b)로, 이때 W, U는 무작위적으로 정해져 점점 교정되는 값(weight)이다.
+
+ tanh의 특성상 단계가 길어지면 후반에 주어지는 x를 제대로 반영하지 못한다.
+
+ LSTM은 개량된 형태이다. (LONG SHORT TERM MEMORY)
+
+ 이는 순차가 크게 차이나는 데이터도 나중의 결과에 큰 수준으로 영향을 주어 Vanilla의 단점을 보완한다.
+
+ output이 많을 수 도 있다.
+
+
+ Time Series Data는 time stamp dimension을 가진다.
+
+ 번역모델등에 쓰이고, 비정형 데이터에도 많이 쓰인다.
