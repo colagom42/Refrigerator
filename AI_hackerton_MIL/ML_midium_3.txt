@@ -1,0 +1,103 @@
+MLP 만들어보기
+
+
+from sklearn.model_selection import train_test_split
+
+X = df_processed[df_feature[-16:-1].index.tolist]
+y = df_processed['SalePrice']
+
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.1, random_state=42)
+
+
+Lasso는 간단한 선형회귀분석 도구이다. MSE최소화한다.
+항목마다 가중치를 둘 수 있다. bias가 각각 L1은 절댓값의 합, Ridge L2는 제곱의 합이다.
+
+sklearn의 metric을 이용해 간단하게 활용하자.
+
+Label transformation은y에 로그를 취하는 등 하면 fitting 하기 좋다.
+단, 예측값에는 지수를 취해 단위를 원상복구한다.
+
+ex) model = model.fit(X_train, np.log(y_train))
+    pred = np.exp(model.predict(X_test))
+
+일단 숫자화된 값들을 Normalize 해줘야한다.
+
+sklearn,preprocessing MinMaxScaler 이용한다.
+
+min_max_scaler = MinMaxScaler()
+
+~.fit(X_train)
+
+scaled_X_train = ~.transform(X_train)
+
+y항이 없으면 fit이 안돼므로 (np.array(y_train).reshape(-1, 1))로 리쉐이프 해준다.
+
+Model Architecture
+
+model = keras.Sequential(
+	[
+		keras.Input(shape=scaled_X_train.shape[-1]),
+		layers.Dense(96, activation='relu'),
+		layers.Dense(1,kernel_regularizer=tf.keras.regularizers.l1(1.0))
+	]
+)
+
+
+prediction이 끝나면 inverse_transform으로 원래 값을 예측한다.
+
+layer에 activation='relu'등을 추가해 적합도를 높일 수 있다.
+
+fit 함수에 validation_split = 0.05를 인자로 주어 과적합을 막을 수 있다.
+
+이를 EarlyStopping을 통해 적당한 때 멈출 수 있다.
+
+ex) tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=7)
+하고 fit에 위 값을 callbacks 인자로 주면 잘 작동한다.
+
+
+과적합은 오차(variance)의 편차가 커진다.
+저적합은 오차의 편차가 적으나 bias가 높다.
+
+과적합을 막기 위해 1. Simpler model
+		   2. Earlystopping
+		   3. dropout
+		   4. regularization
+		   5. More data 등등 있다.
+dropout은 학습시마다 각 레이어의 노드 몇개를 랜덤하게 가중치를 0으로 만든다.
+h = layer.Dropout(0.3)(h) 와 같이 드롭아웃 레이어를 추가하면 된다.
+
+sigmoid, tanh는 gradient를 1/4로 계속 감소시켜 거의 사용하지 않는다.
+
+Otinazer adam은
+
+단순 learning rate개념, sgd만으로는 비효율적이기 때문이다.
+이에 momentum개념을 추가하기도 한다.
+
+
+Cross Validation
+학습시에 우리에겐 test set이 없다.
+단순 validationset 만으로는 유전적 부동이 일어나기 쉽다.
+이에 validation set을 겹치지 않게 여러번 뽑아 모두 감싸도록 여러번 시행하고 평균을 낸다.
+
+for train_index, test_index in kf.split(scaled_X):
+
+
+
+Decision tree
+
+impurity가 낮은 순으로 노드를 정한다.
+
+지니계수는 1 - A/(A+B) - B/(A+B) 이다.
+
+
+Decision tree regression
+
+숫자형으로 학습을 시키려면,
+
+Variance = impurity로 보고
+
+brute force로 범위를 정한다.
+표준편차의 가중 평균이 최소일때로 결정한다.
+
+randomforest : n_estimator가 중요하다. 하여간 classifier에나 유용함.

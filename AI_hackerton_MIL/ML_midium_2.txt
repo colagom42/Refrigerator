@@ -1,0 +1,103 @@
+데이터 분석 및 전처리
+ 
+ EDA(Explorational data analisys)
+ 탐색적 데이터 분석
+
+
+ EDA
+ 전처리
+ MLP
+ Cross validation
+ Decision Tree
+ bagging
+ boosting
+
+
+import pandas as pd
+import numpy as np
+
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+df_train = pd.read_csv('train.csv')
+
+numeric = [f for f in df_train.columns if df_train.dtypes[f] != 'object']
+///numeric 데이터 타입 분리(숫자형)
+
+label 확인
+
+df_train['SalePrice'].describe()
+//label 이상 유무 확인
+
+sns.distplot{df_train['SalePrice']};
+
+ 상관관계 파악하기
+
+ var = 'GrLivArea'
+ data = pd.concat([df_train['SalePrice'], df_train[var]], axis=1)
+
+ data.plot.scatter(x='GrLivArea', y='SalePrice', ylim=(0,800000));
+
+ 유사하게1stFlrSF도 확인 가능!
+ 이외 모든 항목에 대해 확인 가능함
+
+
+ sns.boxplot(x=var, y='SalePrice', data = data)
+ ///IQR은 상하위25퍼센트는 박스로, 그 1.5배가 선으로 나타난다.
+
+
+ 전체적으로 보려면
+
+ corrmat = df_train.corr()
+ ///상관관계 매트릭스를 구함
+ 
+ corrmat(['SalePrice'])
+ //특정 대상에 대한 칼럼 출력 단, 숫자형자료만.
+
+
+ f, ax = plt.subplots(figsize=(12, 9))
+ sns.heatmap(corrmat, vmax =.8, square=True);
+ //상관관계의 정도를 2차원 히트맵으로 전테적으로 보여줌
+
+정렬해서 보려면 
+
+corrmat.sort_values(by=['Sale Price'])['SalePrice']
+
+
+데이터 전처리
+
+
+Missing data
+
+df_missing = df_train.isnull().sum()
+
+가장 단순한 방법은 걍 행이나 렬을 날리는것
+
+df_train.drop(df_missing.index.tolist(), 1)
+
+
+Categorical data
+
+각각의 카테고리를 보고 하나하나 점수를 잘 맥이면 조습니다
+
+df_order['val'] df_train[feature_name].unique()
+
+
+ ~.index = ~.val
+
+
+df_order['mean_price'] = df_train[[feature_name, 'SalePrice']].groupby(feature_name).mean()['SalePrice']
+
+~.sort_values('mran_price')
+~['rank'] = range(1, len(df_order) + 1)
+
+df_train[feature_name + '_rank'] = df_train.apply(lambda row: df_order[row[feature_name]], axis = 1)
+///df_train의 각 로우마다 df_order의 각 로우를 feature_name에 맞춰 받아 넣는다.
+
+각 카테고리형 데이터마다 반복한다!!!
+
+
+
+
+
+
