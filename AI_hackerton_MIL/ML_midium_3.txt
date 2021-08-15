@@ -101,3 +101,31 @@ brute force로 범위를 정한다.
 표준편차의 가중 평균이 최소일때로 결정한다.
 
 randomforest : n_estimator가 중요하다. 하여간 classifier에나 유용함.
+
+
+Boosting도 Decision tree 기반이다.
+Bagging은 평균, Boosting은 가중평균이다.
+
+Boosting은 서순이 중요하다. 55도발 왜하냐고!
+
+Ada boost는 error rate에 따라 가중치를 조정한다.
+
+sklearn.ensenble AdaBoostRegressor
+
+
+xgboost는 pip install xgboost로 설치해 사용한다.
+
+
+ 모델 비교평가
+
+
+ 1. 데이터 받기
+ 2.전처리 (날리거나 0처리하거나 등등)
+
+ tip: 전처리된 데이터를 with open('X.npy', 'wb') as f:
+ 				np.save(f, X)
+	등을 이용해 저장할 수 있다.
+
+ inverse transform된것은 y_test와 비교해야한다.
+
+ 어떤 실험을 하던지 트래킹, 엑셀에 정리하면서 하는것이 좋다.

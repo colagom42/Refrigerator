@@ -1,0 +1,68 @@
+
+Rest API
+
+backend, edge device 방식이 있다.
+
+
+모듈화 경량화, 요청을 독립적으로 수행.
+
+Flask를 사용해보아
+
+
+프론트엔드(클라이언트) ----- 캐시 ---------- 백엔드(서버)
+
+프론트엔드 ---- 백엔드 ----- DB
+
+등 다양하게 구성할 수 있다.
+
+
+
+
+Colab 활용 만들어뵈
+
+Ngrok을 쓰자. 중간에 경유해서 포워딩역할
+
+pip install flask-ngrok
+
+app = Flask(__name__. template_filder = '/content')
+
+@app.route("/")
+def predict():
+	return "<h1>This is your Flask server.</h1>"
+	return render_template("submit_form.html")
+def result():
+	data = request.form
+
+	message = ""
+	message += "<h1>House Price</h1>"
+
+	for k, v in data.items():
+		print(k, v)
+대충 이런 식이다.
+
+
+프론트엔드는 html로 만들어준다.
+
+<html>
+	<body>
+		<form action="/result" method="POST">
+			<p>overallqual
+				<br> Rates ... </br>
+				<input type="range" name = "OverallQual"
+					min = "1", max="10"/>
+
+			</p>
+
+			<p>
+				<select name="LotShape" size="4">
+					<option value="Reg">Regular</option>
+					<option value="IR1" selected="selected">Slightly irregular</option>
+		</p>
+		
+		</form>
+	</body>
+</html>
+
+
+
+응답 API

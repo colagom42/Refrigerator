@@ -1,0 +1,51 @@
+
+데이터를 열심히 모으고
+
+실시간으로 들어오는 데이터를 모으고 처리하는 파이프를 관리하고
+
+data pipeline - Airflow
+
+정리하고
+
+Data query
+테이블형식 relational DB는 밀려났고
+
+key - value쓰는 hive등등 여러 머신에 저장하고 병렬처리함
+
+
+몇억짜리 엄청 큰 데이터 처리하기 조흠
+
+
+Annotation. label, 전처리
+
+Data collection
+
+Data verification
+
+Feature Extraction
+
+Analysys
+
+머신러닝 엔지니어가 열심히 해야한다.
+
+
+벤치마킹도 많이 한다.
+Browse State of the Art 
+paperswithcode.com
+
+performance tuning, Evalualtion
+
+
+resource management
+
+서버 하나, 여럿을 넘어 클러스터로 처리한다.
+컨테이너기반 개발환경을 제공한다. GPU충돌도 없다.
+오케스트레이션 kubernetes
+마스터가 있고 워커들이 있어서 적절히 요청해준다.
+
+데이터는 분산저장해 모든 gpu에서 접근가능케한다.
+
+CI/CD 지속적 테스트, 지속적 배포
+옵스들이 한다.
+
+Monitoring

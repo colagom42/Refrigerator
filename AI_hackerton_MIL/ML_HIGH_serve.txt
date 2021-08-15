@@ -1,0 +1,35 @@
+
+데이터
+모델
+py
+html
+pip install
+
+
+git 많이씀
+virtual machine docker을 걍 올려버림
+
+설치, 실행 자동화
+
+tail -f nohup.out
+
+뒤에 & 붙이면 백그라운드 실행
+
+
+Docker image
+실행가능한 설치 스크립트
+
+
+Docker container
+그걸 실행한거
+
+Docker registry
+도커 이미지 올려놓는곳 ex)DockerHub
+
+pull, run docker
+
+docker build로 커스텀 도커를 만들 수 있다.
+최소 os수준에서 시작해서, 각종 api를 설치해 추가할 수 있다.
+
+RUN, WORKDIR, ADD, ENTRYPOINT등을 활용한다.
+
